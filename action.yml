@@ -2,9 +2,12 @@ name: 'Snyk Job Summary Action'
 description: 'Greet someone' # todo
 
 inputs:
-  token:
-    description: 'Snyk Token'
-    required: true
+  dependencies-report-path:
+    description: '' # todo
+    required: false
+  code-report-path:
+    description: '' # todo
+    required: false
 
 runs:
   using: "composite"
