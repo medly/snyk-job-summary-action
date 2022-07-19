@@ -44,15 +44,15 @@ runs:
       shell: bash
       run: |
         which python
+        python --version
         pwd
-        ls -alh
-        which tree
-        tree
+        ls -alh ../
+        tree ../
       continue-on-error: true
 
     - name: run script
-      run: scripts/display_vulnerabilities.py
-      shell: python
+      run: python scripts/display_vulnerabilities.py
+      shell: bash
 
     - run: cat vulnerabilities.md >> $GITHUB_STEP_SUMMARY
       name: Add output to Job Summary
