@@ -1,5 +1,5 @@
 name: 'Snyk Job Summary Action'
-description: 'Greet someone' # todo
+description: 'Add a Job Summary from Snyk reports, also uploads HTML reports to Github Packages'
 
 inputs:
   dependencies-report-path:
@@ -40,20 +40,10 @@ runs:
       name: install mdutils
       shell: bash
 
-    - name: DEBUG
-      shell: bash
-      run: |
-        which python
-        python --version
-        pwd
-        ls -alh ../
-        tree ../
-      continue-on-error: true
-
-    - name: run script
-      run: python scripts/display_vulnerabilities.py
+    - name: Run script
+      run: python ${{ github.action_path }}/scripts/display_vulnerabilities.py
       shell: bash
 
-    - run: cat vulnerabilities.md >> $GITHUB_STEP_SUMMARY
-      name: Add output to Job Summary
+    - name: Add output to Job Summary
+      run: cat vulnerabilities.md >> $GITHUB_STEP_SUMMARY
       shell: bash
