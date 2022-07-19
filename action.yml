@@ -1,13 +1,13 @@
 name: 'Snyk Job Summary Action'
 description: 'Add a Job Summary from Snyk reports, also uploads HTML reports to Github Packages'
 
-inputs:
-  dependencies-report-path:
-    description: '' # todo
-    required: false
-  code-report-path:
-    description: '' # todo
-    required: false
+#inputs:
+#  dependencies-report-path:
+#    description: '' # todo
+#    required: false
+#  code-report-path:
+#    description: '' # todo
+#    required: false
 
 runs:
   using: composite
