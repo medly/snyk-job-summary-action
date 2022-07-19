@@ -1,4 +1,4 @@
-# snyk-summary-action
+# snyk-job-summary-action
 
 Use this action to add a [Job Summary](https://github.blog/2022-05-09-supercharging-github-actions-with-job-summaries/) in GitHub Workflows.
 
@@ -14,5 +14,5 @@ Use this action to add a [Job Summary](https://github.blog/2022-05-09-supercharg
     command: test --all-projects --json-file-output=snyk_code.json
 
 - name: Add Job Summary from Snyk reports
-  uses: medly/snyk-summary-action@v1
+  uses: medlypharmacy/snyk-job-summary-action@v1
 ```
