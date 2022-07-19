@@ -15,7 +15,7 @@ runs:
   steps:
     - uses: actions/setup-node@v3
 
-    - run: npm install snyk-to-html -g
+    - run: npm install snyk-to-html --location=global
       shell: bash
 
     - name: convert Snyk Dependencies json to html format
