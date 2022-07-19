@@ -40,6 +40,16 @@ runs:
       name: install mdutils
       shell: bash
 
+    - name: DEBUG
+      shell: bash
+      run: |
+        which python
+        pwd
+        ls -alh
+        which tree
+        tree
+      continue-on-error: true
+
     - name: run script
       run: scripts/display_vulnerabilities.py
       shell: python
