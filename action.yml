@@ -10,36 +10,40 @@ inputs:
     required: false
 
 runs:
-  using: "composite"
+  using: composite
+
   steps:
     - uses: actions/setup-node@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
 
-    - name: Install snyk-to-html 
-      run: npm install snyk-to-html -g
+    - run: npm install snyk-to-html -g
+      shell: bash
 
     - name: convert Snyk Dependencies json to html format
       run: snyk-to-html -i snyk_dependencies.json -o snyk_dependencies.html
+      shell: bash
+
     - name: convert Snyk Code json to html format
       run: snyk-to-html -i snyk_code.json -o snyk_code.html
+      shell: bash
 
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v3
       with:
         name: snyk-details
         path: |
-        snyk_dependencies.html
-        snyk_code.html
+          snyk_dependencies.html
+          snyk_code.html
         retention-days: 7
         if-no-files-found: ignore
-    
-    - name: install mdutils
-      run: pip install mdutils
-  
-    - name: run script
-      run: python scripts/display_vulnerabilities.py
 
-    - name : summary 
-      run: cat vulnerabilities.md >> $GITHUB_STEP_SUMMARY
+    - run: pip install mdutils
+      name: install mdutils
+      shell: bash
+
+    - name: run script
+      run: scripts/display_vulnerabilities.py
+      shell: python
+
+    - run: cat vulnerabilities.md >> $GITHUB_STEP_SUMMARY
+      name: Add output to Job Summary
+      shell: bash
