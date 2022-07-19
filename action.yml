@@ -41,7 +41,7 @@ runs:
       shell: bash
 
     - name: Run script
-      run: python ${{ github.action_path }}/scripts/display_vulnerabilities.py
+      run: python ${{ github.action_path }}/job_summary.py
       shell: bash
 
     - name: Add output to Job Summary
