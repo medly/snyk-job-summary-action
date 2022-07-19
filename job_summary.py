@@ -194,7 +194,7 @@ def display_count(vulnerability_data, output, type_of_vulnerability):
             
         dump_vulnerabilities(count, type_of_vulnerability, output, resources, summary)
     else:
-        output.new_header(level=1, title=f"{type_of_vulnerability} Scanner Result Summary")
+        output.new_header(level=1, title=f"{type_of_vulnerability.capitalize()} Scanner Result Summary")
         output.new_paragraph("No Vulnerabilities Found")
 
 try:
