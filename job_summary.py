@@ -194,7 +194,6 @@ try:
     
     display_count(snyk_code_data, output, "code")
     display_count(snyk_dependency_data, output, "dependencies")
-    display_count(snyk_dependency_data, output, "licenses")
     output.create_md_file()
 
 except Exception as err:
