@@ -56,7 +56,7 @@ def get_json_object(path):
         return json.load(file)
     return None
 
-def get_dependencies_vulnerability_count(snyk_dependencies_data):
+def get_dependencies_and_licenses_vulnerability_count(snyk_dependencies_data):
     """
     Takes the dependency file created by snyk and count dependency vulnerability
 
@@ -70,6 +70,7 @@ def get_dependencies_vulnerability_count(snyk_dependencies_data):
         snyk_dependencies_data = [snyk_dependencies_data]
 
     synk_vulnerabilities_count = {}
+    synk_licenses_count = {}
     
     for data in snyk_dependencies_data:
         synk_vulnerabilities_results = data["vulnerabilities"]
@@ -77,36 +78,15 @@ def get_dependencies_vulnerability_count(snyk_dependencies_data):
         # count the different level of vulnerability
         for dependency in synk_vulnerabilities_results:
             vulnerability_severity = dependency["severity"].lower()
-            synk_vulnerabilities_count[vulnerability_severity] = synk_vulnerabilities_count.get(
-                vulnerability_severity, 0) + 1
-
-    return synk_vulnerabilities_count
-
-def get_licenses_vulnerability_count(snyk_licenses_data):
-    """
-    Takes the dependency file created by snyk and count licenses vulnerability
-
-    Args:
-        SNYK_DEPENDENCIES_PATH (string): path of snyk dependencies file which is created using `snyk test --all-projects --json-file-output=snyk_dependencies.json`
-
-    Returns:
-        count of licenses vulnerability with respect to severity
-    """
-    if not isinstance(snyk_licenses_data, list):
-        snyk_licenses_data = [snyk_licenses_data]
-
-    synk_licenses_count = {}
-
-    for data in snyk_licenses_data:
-        synk_licenses_results = data["licensesPolicy"]["orgLicenseRules"]
-
-        for license_name, license_info in synk_licenses_results.items():
             
-            license_severity = license_info["severity"].lower()
-            synk_licenses_count[license_severity] = synk_licenses_count.get(
-                license_severity, 0) + 1
+            if 'type' in dependency.keys() and dependency['type'] == 'license':
+                synk_licenses_count[vulnerability_severity] = synk_licenses_count.get(
+                    vulnerability_severity, 0) + 1
+            else:
+                synk_vulnerabilities_count[vulnerability_severity] = synk_vulnerabilities_count.get(
+                    vulnerability_severity, 0) + 1
 
-    return synk_licenses_count
+    return synk_vulnerabilities_count, synk_licenses_count
 
 
 def get_code_vulnerability_count(snyk_code_data):
@@ -182,20 +162,29 @@ def display_count(vulnerability_data, output, type_of_vulnerability):
     """    
     if vulnerability_data:
         if type_of_vulnerability == 'code':
-            count = get_code_vulnerability_count(vulnerability_data)
+            snyk_code_count = get_code_vulnerability_count(vulnerability_data)
+            display_vulnerabilities(output, snyk_code_count, type_of_vulnerability)
         elif type_of_vulnerability == 'dependencies':
-            count = get_dependencies_vulnerability_count(vulnerability_data)
-        elif type_of_vulnerability == 'licenses':
-            count = get_licenses_vulnerability_count(vulnerability_data)
-                
-        description = descriptions[type_of_vulnerability]
-        resources = description['resources']
-        summary = description['summary']
-            
-        dump_vulnerabilities(count, type_of_vulnerability, output, resources, summary)
+            snyk_dependencies_count, synk_licenses_count = get_dependencies_and_licenses_vulnerability_count(vulnerability_data)
+            display_vulnerabilities(output, snyk_dependencies_count, type_of_vulnerability)
+            display_vulnerabilities(output, synk_licenses_count, 'licenses')
     else:
-        output.new_header(level=1, title=f"{type_of_vulnerability.capitalize()} Scanner Result Summary")
-        output.new_paragraph("No Vulnerabilities Found")
+        if type_of_vulnerability == "code":
+            output.new_header(level=1, title=f"{type_of_vulnerability.capitalize()} Scanner Result Summary")
+            output.new_paragraph("No Vulnerabilities Found")
+        elif type_of_vulnerability == "dependencies":
+            output.new_header(level=1, title=f"{type_of_vulnerability.capitalize()} Scanner Result Summary")
+            output.new_paragraph("No Vulnerabilities Found")
+            
+            output.new_header(level=1, title="Licenses Scanner Result Summary")
+            output.new_paragraph("No Vulnerabilities Found")
+
+def display_vulnerabilities(output, count, type_of_vulnerability):
+    description = descriptions[type_of_vulnerability]
+    resources = description['resources']
+    summary = description['summary']
+            
+    dump_vulnerabilities(count, type_of_vulnerability, output, resources, summary)
 
 try:
     
