@@ -4,6 +4,7 @@ from os.path import exists
 from mdutils.mdutils import MdUtils
 import sys
 import traceback
+from os import environ
 
 # mapping of level to severity
 code_severity_map = {
@@ -22,8 +23,8 @@ severity_symbol_map = {
 
 severity_priority_list = ['critical', 'high', 'medium', 'low']
 
-SNYK_DEPENDENCIES_PATH = 'snyk_dependencies.json'
-SNYK_CODE_PATH = 'snyk_code.json'
+SNYK_DEPENDENCIES_PATH = environ['inputs.dependencies-report-path']
+SNYK_CODE_PATH = environ['inputs.code-report-path']
 
 descriptions = {
         "code": {

@@ -1,13 +1,13 @@
 name: 'Snyk Job Summary Action'
 description: 'Add a Job Summary from Snyk reports, also uploads HTML reports to Github Packages'
 
-#inputs:
-#  dependencies-report-path:
-#    description: '' # todo
-#    required: false
-#  code-report-path:
-#    description: '' # todo
-#    required: false
+inputs:
+ dependencies-report-path:
+   description: '' # todo
+   required: false
+ code-report-path:
+   description: '' # todo
+   required: false
 
 runs:
   using: composite
@@ -19,11 +19,11 @@ runs:
       shell: bash
 
     - name: convert Snyk Dependencies json to html format
-      run: snyk-to-html -i snyk_dependencies.json -o snyk_dependencies.html
+      run: snyk-to-html -i ${{inputs.dependencies-report-path}} -o snyk_dependencies.html
       shell: bash
 
     - name: convert Snyk Code json to html format
-      run: snyk-to-html -i snyk_code.json -o snyk_code.html
+      run: snyk-to-html -i ${{inputs.code-report-path}} -o snyk_code.html
       shell: bash
 
     - name: 'Upload Artifact'
