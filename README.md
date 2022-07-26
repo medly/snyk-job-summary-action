@@ -22,7 +22,7 @@ Add the following code to your GitHub Action
   env:
     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
   with:
-    command: code test --all-projects --json-file-output=snyk_code.json
+    command: code test --all-projects --json-file-output=snyk_dependencies.json
 
 - name: Add Job Summary from Snyk reports
   uses: medlypharmacy/snyk-job-summary-action@v1
