@@ -5,6 +5,7 @@ from mdutils.mdutils import MdUtils
 import sys
 import traceback
 from os import environ
+import re
 
 # mapping of level to severity
 code_severity_map = {
@@ -23,8 +24,8 @@ severity_symbol_map = {
 
 severity_priority_list = ['critical', 'high', 'medium', 'low']
 
-SNYK_DEPENDENCIES_PATH = environ['inputs.dependencies-report-path']
-SNYK_CODE_PATH = environ['inputs.code-report-path']
+SNYK_DEPENDENCIES_PATH = "snyk_dependencies.json"
+SNYK_CODE_PATH = "snyk_code.json"
 
 descriptions = {
         "code": {
@@ -198,7 +199,21 @@ def display_count(vulnerability_data, output, type_of_vulnerability):
         output.new_header(level=1, title=f"{type_of_vulnerability.capitalize()} Scanner Result Summary")
         output.new_paragraph("No Vulnerabilities Found")
 
+def getInput(name):
+    print(name, f"INPUT_${re.sub('/ /g', '_', name ).upper()}")
+    input_env = environ[f"INPUT_${re.sub('/ /g', '_', name ).upper()}"]
+    print(name, input_env)
+    return input_env.strip()
 try:
+    print("env are:", environ.items())
+    input_snyk_dependencies_path = getInput("dependencies-report-path")
+    input_snyk_code_path = getInput("code-report-path")
+    
+    if input_snyk_dependencies_path != "":
+        SNYK_DEPENDENCIES_PATH = input_snyk_dependencies_path
+    
+    if input_snyk_code_path != "":
+        SNYK_CODE_PATH = input_snyk_code_path
     
     output = MdUtils(file_name="vulnerabilities")
     snyk_dependency_data = get_json_object(SNYK_DEPENDENCIES_PATH)
