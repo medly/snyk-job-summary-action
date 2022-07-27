@@ -24,8 +24,8 @@ severity_symbol_map = {
 
 severity_priority_list = ['critical', 'high', 'medium', 'low']
 
-SNYK_DEPENDENCIES_PATH = "snyk_dependencies.json"
-SNYK_CODE_PATH = "snyk_code.json"
+SNYK_DEPENDENCIES_PATH = 'snyk_dependencies.json'
+SNYK_CODE_PATH = 'snyk_code.json'
 
 descriptions = {
         "code": {
