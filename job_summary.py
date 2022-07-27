@@ -201,8 +201,6 @@ def display_count(vulnerability_data, output, type_of_vulnerability):
 
 
 try:
-    print("dependency path: ", environ['INPUT_DEPENDENCIES_REPORT_PATH'])
-    print("code path: ", environ['INPUT_CODE_REPORT_PATH'])
     
     if "INPUT_DEPENDENCIES_REPORT_PATH" in environ.keys():
         SNYK_DEPENDENCIES_PATH = environ['INPUT_DEPENDENCIES_REPORT_PATH']
