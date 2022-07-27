@@ -205,10 +205,10 @@ try:
     print("code path: ", environ['INPUT_CODE_REPORT_PATH'])
     
     if "INPUT_DEPENDENCIES_REPORT_PATH" in environ.keys():
-        input_snyk_dependencies_path = environ['INPUT_DEPENDENCIES_REPORT_PATH']
+        SNYK_DEPENDENCIES_PATH = environ['INPUT_DEPENDENCIES_REPORT_PATH']
     
     if "INPUT_CODE_REPORT_PATH" in environ.keys():
-        input_snyk_code_path = environ['INPUT_CODE_REPORT_PATH']
+        SNYK_CODE_PATH = environ['INPUT_CODE_REPORT_PATH']
     
     output = MdUtils(file_name="vulnerabilities")
     snyk_dependency_data = get_json_object(SNYK_DEPENDENCIES_PATH)
