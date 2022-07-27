@@ -41,7 +41,10 @@ runs:
       shell: bash
 
     - name: Run script
-      run: python ${{ github.action_path }}/job_summary.py
+      run: |
+        INPUT_DEPENDENCIES_REPORT_PATH=${{inputs.dependencies-report-path}}
+        INPUT_CODE_REPORT_PATH=${{inputs.code-report-path}}
+        python ${{ github.action_path }}/job_summary.py
       shell: bash
 
     - name: Add output to Job Summary
