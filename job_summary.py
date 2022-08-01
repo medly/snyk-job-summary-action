@@ -201,12 +201,13 @@ def display_count(vulnerability_data, output, type_of_vulnerability):
 
 
 try:
+    command_line_args = sys.argv
     
-    if "INPUT_DEPENDENCIES_REPORT_PATH" in environ.keys():
-        SNYK_DEPENDENCIES_PATH = environ['INPUT_DEPENDENCIES_REPORT_PATH']
+    if len(command_line_args) > 1 and command_line_args[1].strip() != "":
+        SNYK_DEPENDENCIES_PATH = command_line_args[1]
     
-    if "INPUT_CODE_REPORT_PATH" in environ.keys():
-        SNYK_CODE_PATH = environ['INPUT_CODE_REPORT_PATH']
+    if len(command_line_args) > 2 and command_line_args[2].strip() != "":
+        SNYK_CODE_PATH = command_line_args[2]
     
     output = MdUtils(file_name="vulnerabilities")
     snyk_dependency_data = get_json_object(SNYK_DEPENDENCIES_PATH)
