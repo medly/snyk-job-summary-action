@@ -1,6 +1,6 @@
 # snyk-job-summary-action
 
-Use this action to add a [Job Summary](https://github.blog/2022-05-09-supercharging-github-actions-with-job-summaries/) in GitHub Workflows.
+This Github Action gives the statistics of different kinds of vulnerabilities. Use this action to add a [Job Summary](https://github.blog/2022-05-09-supercharging-github-actions-with-job-summaries/) in GitHub Workflows.
 
 ## Usage
 
