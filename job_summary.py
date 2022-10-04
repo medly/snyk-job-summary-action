@@ -1,4 +1,3 @@
-from cgitb import text
 import json
 from os.path import exists
 from mdutils.mdutils import MdUtils
@@ -186,7 +185,15 @@ def display_vulnerabilities(output, count, type_of_vulnerability):
             
     dump_vulnerabilities(count, type_of_vulnerability, output, resources, summary)
 
+
 try:
+    command_line_args = sys.argv
+    
+    if len(command_line_args) > 1 and command_line_args[1].strip() != "":
+        SNYK_DEPENDENCIES_PATH = command_line_args[1]
+    
+    if len(command_line_args) > 2 and command_line_args[2].strip() != "":
+        SNYK_CODE_PATH = command_line_args[2]
     
     output = MdUtils(file_name="vulnerabilities")
     snyk_dependency_data = get_json_object(SNYK_DEPENDENCIES_PATH)
