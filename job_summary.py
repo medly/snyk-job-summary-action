@@ -1,11 +1,8 @@
-from cgitb import text
 import json
 from os.path import exists
 from mdutils.mdutils import MdUtils
 import sys
 import traceback
-from os import environ
-import re
 
 # mapping of level to severity
 code_severity_map = {
