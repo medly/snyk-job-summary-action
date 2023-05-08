@@ -5,7 +5,9 @@ This Github Action gives the statistics of different kinds of vulnerabilities. U
 
 ## Usage
 
-Add the following code to your GitHub Action
+To use this action, you will need to have a Snyk account and an API token. If you haven't already done so, sign up for a [free Snyk account](https://snyk.io/signup/), then [generate an API token](https://app.snyk.io/account/token).
+
+To use this action in your project, add the following to your GitHub Actions workflow:
 
 ```yaml
 ...
@@ -30,3 +32,20 @@ Add the following code to your GitHub Action
       dependencies-report-path: snyk_dependencies.json # The file name of json file which is generated on snyk test
       code-report-path: snyk_code.json # The file name of json file which is generated on snyk code test
 ```
+This action performs the following steps:
+
+- Runs a Snyk test to check for vulnerabilities in dependencies
+- Runs a Snyk test to check for vulnerabilities in code
+- Generates JSON files for both dependencies and code tests
+- Adds a job summary with the results of the Snyk tests
+
+Note that this action is set to continue on error, so your workflow will not fail even if vulnerabilities are found.
+
+## Inputs
+`SNYK_TOKEN`: Your Snyk API token. This should be stored as a [GitHub secret](https://docs.github.com/en/actions/security-guides/encrypted-secrets).
+
+## Contributing
+We welcome contributions to this GitHub Action! To contribute, please create a pull request with your proposed changes.
+
+## License
+This GitHub Action is licensed under the [MIT License](https://chat.openai.com/LICENSE).
