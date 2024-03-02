@@ -35,7 +35,7 @@ runs:
         path: |
           snyk_dependencies.html
           snyk_code.html
-        retention-days: 7
+        retention-days: 60
         if-no-files-found: ignore
 
     - run: pip install mdutils
